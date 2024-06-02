@@ -9,6 +9,7 @@ import android.view.Surface
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -16,11 +17,23 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.dicoding.asclepius.data.entity.HistoryEntity
+import com.dicoding.asclepius.utils.DateFormatter
+import com.dicoding.asclepius.view.history.HistoryViewModel
+import com.dicoding.asclepius.view.history.ViewModelFactory
+import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
+import com.tugas.capstoneproject_historia.data.remote.response.LandmarkInfo
 import com.tugas.capstoneproject_historia.databinding.ActivityCameraBinding
+import com.tugas.capstoneproject_historia.history.HistoryActivity
+
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
+
+    private val viewModel: HistoryViewModel by viewModels {
+        ViewModelFactory.getInstance(application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +47,19 @@ class CameraActivity : AppCompatActivity() {
                 else CameraSelector.DEFAULT_BACK_CAMERA
             startCamera()
         }
-        binding.captureImage.setOnClickListener { takePhoto() }
+        binding.captureImage.setOnClickListener {
+//            takePhoto()
+            val data = setupData()
+            makeHistory(data)
+
+            intent = Intent(this, DetailActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.ivHistory.setOnClickListener {
+            intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     public override fun onResume() {
@@ -136,6 +161,22 @@ class CameraActivity : AppCompatActivity() {
                 imageCapture?.targetRotation = rotation
             }
         }
+    }
+
+    private fun setupData(): LandmarkInfo {
+        val repo = RemoteDataSource(this)
+        val  landmark = repo.getLandmarkInfo()
+
+        return landmark
+    }
+
+    private fun makeHistory(landmarkInfo: LandmarkInfo) {
+        val data = HistoryEntity(
+            title = landmarkInfo.title,
+            date = DateFormatter.formatLongToDate(System.currentTimeMillis()),
+            imageUri = landmarkInfo.img
+        )
+        viewModel.insertHistory(data)
     }
 
     override fun onStart() {

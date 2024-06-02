@@ -56,10 +56,15 @@ class MainActivity : AppCompatActivity() {
 
         if (!allPermissionsGranted()) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+        } else {
+            startCameraX()
         }
 
         binding.cameraXButton.setOnClickListener { startCameraX() }
-        binding.uploadButton.setOnClickListener { uploadImage() }
+        binding.uploadButton.setOnClickListener {
+            //uploadImage()
+            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+        }
     }
 
     private fun startCameraX() {

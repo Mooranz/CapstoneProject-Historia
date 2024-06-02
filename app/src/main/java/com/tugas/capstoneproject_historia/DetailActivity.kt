@@ -1,5 +1,6 @@
 package com.tugas.capstoneproject_historia
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
 import com.tugas.capstoneproject_historia.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -22,19 +24,11 @@ class DetailActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val imgLink = getString(R.string.tugu_img)
-        val detailText = getString(R.string.tugu_en_detail)
-
-        binding.tvTitle.text = getString(R.string.tugu_title)
-        binding.tvDetails.text = Html.fromHtml(detailText, Html.FROM_HTML_MODE_COMPACT)
+        setupData(this)
         binding.tvLink.text = getString(R.string.tugu_link)
 
-        Glide.with(this)
-            .load(imgLink)
-            .into(binding.imgDetail)
-
-        if (clicked == false) {
-            binding.tvLink.setTextColor(getColor(com.bumptech.glide.R.color.material_blue_grey_800))
+        if (!clicked) {
+            binding.tvLink.setTextColor(getColor(com.bumptech.glide.R.color.material_deep_teal_200))
         } else binding.tvLink.setTextColor(getColor(com.bumptech.glide.R.color.abc_tint_default))
 
         binding.tvLink.setOnClickListener {
@@ -44,7 +38,6 @@ class DetailActivity : AppCompatActivity() {
 
             clicked = true
             binding.tvLink.setTextColor(getColor(com.bumptech.glide.R.color.abc_tint_default))
-
         }
     }
 
@@ -56,6 +49,22 @@ class DetailActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setupData(context: Context) {
+        val repo = RemoteDataSource(this)
+        val landmarkInfo = repo.getLandmarkInfo().apply {
+            binding.apply {
+                tvTitle.text = title
+                tvYearMade.text = "Dibangun Tahun: $year"
+                tvLocation.text = locaction
+                tvDetails.text = Html.fromHtml(desc, Html.FROM_HTML_MODE_COMPACT)
+
+                Glide.with(context)
+                    .load(img)
+                    .into(imgDetail)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

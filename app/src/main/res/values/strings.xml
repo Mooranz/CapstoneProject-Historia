@@ -8,7 +8,13 @@
     <string name="tugu_img">https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Yogyakarta_Indonesia_Tugu-Yogyakarta-01.jpg/400px-Yogyakarta_Indonesia_Tugu-Yogyakarta-01.jpg</string>
     <string name="tugu_title">Tugu Yogyakarta</string>
     <string name="tugu_tahun">Tahun Dibangun : 1775</string>
+    <string name="tugu_tahun_angka">1775</string>
     <string name="tugu_lokasi">Yogyakarta</string>
     <string name="tugu_link">https://en.wikipedia.org/wiki/Tugu_Yogyakarta</string>
+    <string name="history_desc">Go to History page</string>
+    <string name="history_item_img_desc">Gambar bangunan yang discan</string>
+    <string name="history_title">Nama Landmark</string>
+    <string name="date_format">yyyy-MM-hh | hh:mm</string>
+    <string name="history_arrow_desc">Menuju Detail</string>
 
 </resources>
