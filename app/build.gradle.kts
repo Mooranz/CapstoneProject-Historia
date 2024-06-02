@@ -55,5 +55,5 @@ dependencies {
     implementation("androidx.camera:camera-view:${camerax_version}")
     implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
 
-
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

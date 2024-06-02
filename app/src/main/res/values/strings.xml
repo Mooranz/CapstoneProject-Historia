@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">CapstoneProject-Historia</string>
+
     <string name="camera_x">CameraX</string>
     <string name="upload">Upload</string>
+
+    <string name="tugu_en_detail"><![CDATA[<p><b>Tugu Yogyakarta</b> (Javanese: ꦠꦸꦒꦸꦔꦪꦺꦴꦒꦾꦏꦂꦠ, <i>Tugu Ngayogyakarta</i>) is an important historical pillar landmark in the city of Yogyakarta, Indonesia. <i>Tugu</i> means monument, which is usually built as a symbol of an area conceptualising characteristics of that region. Because of its historical background, Tugu Yogyakarta has become a historical icon of the city. \n<link rel=\"mw-deduplicated-inline-style\" href=\"mw-data:TemplateStyles:r1218072481\"></p>\n<p>Tugu Yogyakarta is located right in the middle of the intersection between Mangkubumi Street, Sudirman Street, A.M Sangaji street, and Dipenogoro street of the city.\n</p><p>The name Tugu is also an alternative name for the Yogyakarta railway station.\n</p>\n<h2><span id=\"History\">History</span></h2>\n<p>The monument was built by Sri Sultan Hamengkubuwono I in 1755. It was known as <i>Tugu Golong-Gilig</i> (Golong-Gilig Monument), and was built in the spirit of unity of the people. The top of the monument was shaped round (<i>golong</i>) and the pole was cylindric (<i>gilig</i>) shaped, hence its name. The height of the monument is 25 meters. It was built in the shape of a cylindrical pole conical to the top, the bottom as a circular fence, while the top round. It was built line connecting the southern sea, the Yogyakarta palace and Mount Merapi. At the time of meditation, it was said that the Sultan of Yogyakarta at that time used this monument as a benchmark to face the peak of Mount Merapi.\n</p><p>The monument collapsed during a major earthquake on June 10, 1867. In 1889, the Dutch colonial government renovated the monument with a square shape. The top of the monument was built as conical instead of previous round shape, with a small ball at the tip. The height of the monument also reduced from 25 meters to 15 meters. Since then, this monument is also known at the time as <i>De Witte Paal</i> (The White Monument). \n</p><p>In 2012, the renovation of the monument was done. The ornamental yellow painting was done including the ball at the tip. The ornamental paint was made of 22 carat gold. At present there is a small park surrounding the monument.\n</p>]]></string>
+    <string name="tugu_img">https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Yogyakarta_Indonesia_Tugu-Yogyakarta-01.jpg/400px-Yogyakarta_Indonesia_Tugu-Yogyakarta-01.jpg</string>
+    <string name="tugu_title">Tugu Yogyakarta</string>
+    <string name="tugu_tahun">Tahun Dibangun : 1775</string>
+    <string name="tugu_lokasi">Yogyakarta</string>
+    <string name="tugu_link">https://en.wikipedia.org/wiki/Tugu_Yogyakarta</string>
+
 </resources>
