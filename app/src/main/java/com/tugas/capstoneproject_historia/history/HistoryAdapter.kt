@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.view.history
+package com.tugas.capstoneproject_historia.history
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.dicoding.asclepius.data.entity.HistoryEntity
-import com.tugas.capstoneproject_historia.R
+import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.tugas.capstoneproject_historia.databinding.ItemHistoryBinding
 
 class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {

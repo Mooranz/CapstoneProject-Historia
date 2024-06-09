@@ -5,23 +5,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CameraActivity">
+    tools:context=".ui.camera.CameraActivity">
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"/>
+        android:background="#af63bc"/>
 
     <ImageView
         android:id="@+id/captureImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_capture" />
+        app:srcCompat="@drawable/capture_button" />
+
+    <ImageView
+        android:id="@+id/photo_picker_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:layout_constraintBottom_toBottomOf="@+id/captureImage"
+        app:layout_constraintEnd_toStartOf="@+id/captureImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/captureImage"
+        app:srcCompat="@drawable/photo_picker_icon" />
 
     <ImageView
         android:id="@+id/switchCamera"
@@ -31,16 +41,42 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="@+id/viewFinder"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_switch_camera" />
+        app:srcCompat="@drawable/ic_switch_camera"
+        app:tint="@color/white"/>
 
     <ImageView
         android:id="@+id/iv_history"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="16dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/history_desc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_history_24"/>
+        app:srcCompat="@drawable/history_from_figma_icon"
+        app:tint="@color/white"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Historia"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_history"
+        app:layout_constraintEnd_toStartOf="@+id/switchCamera"
+        app:layout_constraintStart_toEndOf="@+id/iv_history"
+        app:layout_constraintTop_toTopOf="@+id/iv_history" />
+
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder"
+        app:layout_constraintVertical_bias="0.40"
+        app:srcCompat="@drawable/frame" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

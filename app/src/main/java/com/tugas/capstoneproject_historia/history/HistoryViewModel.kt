@@ -1,8 +1,8 @@
-package com.dicoding.asclepius.view.history
+package com.tugas.capstoneproject_historia.history
 
 import androidx.lifecycle.ViewModel
 import com.tugas.capstoneproject_historia.data.HistoryRepository
-import com.dicoding.asclepius.data.entity.HistoryEntity
+import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 
 class HistoryViewModel(private val historyRepository: HistoryRepository) : ViewModel() {
     fun getHistory() = historyRepository.getHistory()

@@ -1,8 +1,8 @@
 package com.tugas.capstoneproject_historia.data
 
 import androidx.lifecycle.LiveData
-import com.dicoding.asclepius.data.entity.HistoryEntity
-import com.dicoding.asclepius.data.room.HistoryDao
+import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
+import com.tugas.capstoneproject_historia.data.room.HistoryDao
 import com.dicoding.asclepius.utils.AppExecutors
 
 class HistoryRepository private constructor(

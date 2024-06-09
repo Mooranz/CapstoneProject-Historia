@@ -1,4 +1,4 @@
-package com.tugas.capstoneproject_historia
+package com.tugas.capstoneproject_historia.ui.detail
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.tugas.capstoneproject_historia.R
 import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
 import com.tugas.capstoneproject_historia.databinding.ActivityDetailBinding
 

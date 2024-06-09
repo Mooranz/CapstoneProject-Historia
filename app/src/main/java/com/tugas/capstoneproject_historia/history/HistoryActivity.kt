@@ -8,11 +8,8 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.asclepius.data.entity.HistoryEntity
-import com.dicoding.asclepius.view.history.HistoryAdapter
-import com.dicoding.asclepius.view.history.HistoryViewModel
-import com.dicoding.asclepius.view.history.ViewModelFactory
-import com.tugas.capstoneproject_historia.DetailActivity
+import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
+import com.tugas.capstoneproject_historia.ui.detail.DetailActivity
 import com.tugas.capstoneproject_historia.R
 import com.tugas.capstoneproject_historia.databinding.ActivityHistoryBinding
 

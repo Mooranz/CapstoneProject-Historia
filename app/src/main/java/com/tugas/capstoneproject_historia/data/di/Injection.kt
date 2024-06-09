@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.data.di
+package com.tugas.capstoneproject_historia.data.di
 
 import android.content.Context
 import com.tugas.capstoneproject_historia.data.HistoryRepository

@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.data.remote.retrofit
+package com.tugas.capstoneproject_historia.data.remote.retrofit
 
 /* FOR LATER USE*/
 

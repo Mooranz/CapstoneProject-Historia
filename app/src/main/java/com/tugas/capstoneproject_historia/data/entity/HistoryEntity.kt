@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.data.entity
+package com.tugas.capstoneproject_historia.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -17,5 +17,17 @@ class HistoryEntity(
     var date: String,
 
     @field:ColumnInfo(name = "imageUri")
-    var imageUri: String
+    var imageUri: String,
+
+//    @field:ColumnInfo(name = "province")
+//    var province: Float,
+//
+//    @field:ColumnInfo(name = "lat")
+//    var lat: Float,
+//
+//    @field:ColumnInfo(name = "lon")
+//    var lon: Float,
+//
+//    @field:ColumnInfo(name = "isScanned")
+//    var isScanned: Float,
 )

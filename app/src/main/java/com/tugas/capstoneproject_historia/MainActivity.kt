@@ -7,22 +7,21 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import android.Manifest
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.tugas.capstoneproject_historia.CameraActivity.Companion.CAMERAX_RESULT
+import com.tugas.capstoneproject_historia.ui.camera.CameraActivity.Companion.CAMERAX_RESULT
 import com.tugas.capstoneproject_historia.databinding.ActivityMainBinding
+import com.tugas.capstoneproject_historia.ui.camera.CameraActivity
 
+// Obsolete
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var currentImageUri: Uri? = null
 
-    private val requestPermissionLauncher =
+/*    private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         ContextCompat.checkSelfPermission(
             this,
             REQUIRED_PERMISSION
-        ) == PackageManager.PERMISSION_GRANTED
+        ) == PackageManager.PERMISSION_GRANTED*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,16 +53,16 @@ class MainActivity : AppCompatActivity() {
 
          */
 
-        if (!allPermissionsGranted()) {
-            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
-        } else {
-            startCameraX()
-        }
+//        if (!allPermissionsGranted()) {
+//            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+//        } else {
+//            Toast.makeText(this, "Camera is our main feature, please reopen the app until we implement permission request button :)", Toast.LENGTH_SHORT).show()
+//        }
 
         binding.cameraXButton.setOnClickListener { startCameraX() }
         binding.uploadButton.setOnClickListener {
-            //uploadImage()
-            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+//            uploadImage()
+//            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
     }
 
@@ -92,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
     }
 
-    companion object {
+/*    companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
-    }
+    }*/
 }

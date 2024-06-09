@@ -1,6 +1,9 @@
-package com.tugas.capstoneproject_historia
+package com.tugas.capstoneproject_historia.ui.camera
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +12,8 @@ import android.view.Surface
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -17,10 +22,13 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.dicoding.asclepius.data.entity.HistoryEntity
+import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.dicoding.asclepius.utils.DateFormatter
-import com.dicoding.asclepius.view.history.HistoryViewModel
-import com.dicoding.asclepius.view.history.ViewModelFactory
+import com.tugas.capstoneproject_historia.MainActivity
+import com.tugas.capstoneproject_historia.ui.detail.DetailActivity
+import com.tugas.capstoneproject_historia.createCustomTempFile
+import com.tugas.capstoneproject_historia.history.HistoryViewModel
+import com.tugas.capstoneproject_historia.history.ViewModelFactory
 import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
 import com.tugas.capstoneproject_historia.data.remote.response.LandmarkInfo
 import com.tugas.capstoneproject_historia.databinding.ActivityCameraBinding
@@ -30,6 +38,25 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
+    private var currentImageUri: Uri? = null
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, "Permission request granted", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Permission request denied", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "please reopen the app for permission request :)", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun allPermissionsGranted() =
+        ContextCompat.checkSelfPermission(
+            this,
+            REQUIRED_PERMISSION
+        ) == PackageManager.PERMISSION_GRANTED
 
     private val viewModel: HistoryViewModel by viewModels {
         ViewModelFactory.getInstance(application)
@@ -40,6 +67,10 @@ class CameraActivity : AppCompatActivity() {
 
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (!allPermissionsGranted()) {
+            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+        }
 
         binding.switchCamera.setOnClickListener {
             cameraSelector =
@@ -60,6 +91,8 @@ class CameraActivity : AppCompatActivity() {
             intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
         }
+
+        binding.photoPickerButton.setOnClickListener { startGallery() }
     }
 
     public override fun onResume() {
@@ -131,6 +164,24 @@ class CameraActivity : AppCompatActivity() {
         )
     }
 
+    private fun startGallery() {
+        launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val launcherGallery = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            currentImageUri = uri
+//            uploadImage()  // Jika AI model on cloud
+//            analyzeImage()  // Jika model on device
+            intent = Intent(this, DetailActivity::class.java)
+            startActivity(intent)
+        } else {
+            Log.d("Photo Picker", "No media selected")
+        }
+    }
+
     private fun hideSystemUI() {
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -193,5 +244,7 @@ class CameraActivity : AppCompatActivity() {
         private const val TAG = "CameraActivity"
         const val EXTRA_CAMERAX_IMAGE = "CameraX Image"
         const val CAMERAX_RESULT = 200
+
+        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
     }
 }

@@ -1,11 +1,11 @@
-package com.dicoding.asclepius.data.room
+package com.tugas.capstoneproject_historia.data.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.dicoding.asclepius.data.entity.HistoryEntity
+import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 
 @Dao
 interface HistoryDao {

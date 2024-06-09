@@ -1,10 +1,10 @@
-package com.dicoding.asclepius.view.history
+package com.tugas.capstoneproject_historia.history
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.tugas.capstoneproject_historia.data.HistoryRepository
-import com.dicoding.asclepius.data.di.Injection
+import com.tugas.capstoneproject_historia.data.di.Injection
 
 class ViewModelFactory private constructor(private val historyRepository: HistoryRepository) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
