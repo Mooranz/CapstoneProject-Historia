@@ -1,4 +1,4 @@
-package com.tugas.capstoneproject_historia.history
+package com.tugas.capstoneproject_historia.ui.history
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.tugas.capstoneproject_historia.ui.detail.DetailActivity
@@ -37,6 +38,7 @@ class HistoryActivity : AppCompatActivity() {
             binding.rvHistory.apply {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
+                addItemDecoration(DividerItemDecoration(context, LinearLayoutManager(context).orientation))
                 adapter = historyAdapter
             }
 

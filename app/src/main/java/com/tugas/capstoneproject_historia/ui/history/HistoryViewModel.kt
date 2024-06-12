@@ -1,4 +1,4 @@
-package com.tugas.capstoneproject_historia.history
+package com.tugas.capstoneproject_historia.ui.history
 
 import androidx.lifecycle.ViewModel
 import com.tugas.capstoneproject_historia.data.HistoryRepository

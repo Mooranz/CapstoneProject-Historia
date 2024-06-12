@@ -10,8 +10,7 @@
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#af63bc"/>
+        android:layout_height="match_parent" />
 
     <ImageView
         android:id="@+id/captureImage"
@@ -32,6 +31,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/captureImage"
         app:srcCompat="@drawable/photo_picker_icon" />
+
+    <ImageView
+        android:id="@+id/iv_achievement_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:layout_constraintBottom_toBottomOf="@+id/captureImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/captureImage"
+        app:layout_constraintTop_toTopOf="@+id/captureImage"
+        app:srcCompat="@drawable/achievement_button" />
 
     <ImageView
         android:id="@+id/switchCamera"

@@ -27,12 +27,12 @@ import com.dicoding.asclepius.utils.DateFormatter
 import com.tugas.capstoneproject_historia.MainActivity
 import com.tugas.capstoneproject_historia.ui.detail.DetailActivity
 import com.tugas.capstoneproject_historia.createCustomTempFile
-import com.tugas.capstoneproject_historia.history.HistoryViewModel
-import com.tugas.capstoneproject_historia.history.ViewModelFactory
+import com.tugas.capstoneproject_historia.ui.history.HistoryViewModel
+import com.tugas.capstoneproject_historia.ui.history.ViewModelFactory
 import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
 import com.tugas.capstoneproject_historia.data.remote.response.LandmarkInfo
 import com.tugas.capstoneproject_historia.databinding.ActivityCameraBinding
-import com.tugas.capstoneproject_historia.history.HistoryActivity
+import com.tugas.capstoneproject_historia.ui.history.HistoryActivity
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding

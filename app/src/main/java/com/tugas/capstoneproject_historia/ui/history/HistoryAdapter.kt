@@ -1,12 +1,15 @@
-package com.tugas.capstoneproject_historia.history
+package com.tugas.capstoneproject_historia.ui.history
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.dicoding.asclepius.utils.DateFormatter
 import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.tugas.capstoneproject_historia.databinding.ItemHistoryBinding
 
@@ -19,7 +22,23 @@ class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(D
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val history = getItem(position)
-        holder.bind(history)
+        try {
+            val historyPrev = getItem(position - 1)
+            if (DateFormatter.formatDateToDate(history.date) == DateFormatter.formatDateToDate(historyPrev.date))
+            {
+                holder.bind(history)
+                holder.binding.tvDateHeader.visibility = View.GONE
+                holder.binding.divider.visibility = View.GONE
+                Log.d("DateHeaderAdapter", "hehehe")
+            } else {
+                holder.bind(history)
+                Log.d("DateHeaderAdapter", "anjirlah")
+
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            holder.bind(history)
+            Log.d("DateHeaderAdapter", e.message!!)
+        }
 
         holder.itemView.setOnClickListener{
             onItemClickCallback.onItemClicked(history)
@@ -38,7 +57,8 @@ class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(D
     ) {
         fun bind(historyItem: HistoryEntity) {
             binding.textViewLabel.text = historyItem.title
-            binding.textViewTime.text = historyItem.date
+            binding.tvDateHeader.text = DateFormatter.formatDateToDate(historyItem.date)
+            binding.textViewTime.text = DateFormatter.formatDateToHours(historyItem.date)
             Glide.with(itemView.context)
                 .load(historyItem.imageUri)
                 .into(binding.profileImage)

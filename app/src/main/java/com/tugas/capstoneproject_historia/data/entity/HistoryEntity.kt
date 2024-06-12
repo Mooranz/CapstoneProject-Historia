@@ -29,5 +29,5 @@ class HistoryEntity(
 //    var lon: Float,
 //
 //    @field:ColumnInfo(name = "isScanned")
-//    var isScanned: Float,
+//    var isScanned: Boolean? = false,
 )
