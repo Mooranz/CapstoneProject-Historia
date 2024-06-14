@@ -16,5 +16,8 @@
     <string name="history_title">Nama Landmark</string>
     <string name="date_format">yyyy-MM-hh | hh:mm</string>
     <string name="history_arrow_desc">Menuju Detail</string>
+    <string name="to_maps">To maps</string>
+    <string name="maps">maps</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

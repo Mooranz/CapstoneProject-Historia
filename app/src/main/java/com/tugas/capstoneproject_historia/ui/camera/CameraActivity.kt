@@ -32,6 +32,7 @@ import com.tugas.capstoneproject_historia.ui.history.ViewModelFactory
 import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
 import com.tugas.capstoneproject_historia.data.remote.response.LandmarkInfo
 import com.tugas.capstoneproject_historia.databinding.ActivityCameraBinding
+import com.tugas.capstoneproject_historia.ui.achievement.AchievementActivity
 import com.tugas.capstoneproject_historia.ui.history.HistoryActivity
 
 class CameraActivity : AppCompatActivity() {
@@ -89,6 +90,10 @@ class CameraActivity : AppCompatActivity() {
 
         binding.ivHistory.setOnClickListener {
             intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
+        }
+        binding.ivAchievementButton.setOnClickListener {
+            intent = Intent(this, AchievementActivity::class.java)
             startActivity(intent)
         }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_maps"
+        android:contentDescription="@string/to_maps"
+        android:icon="@drawable/maps_with_pins"
+        app:showAsAction="always"
+        android:title="@string/maps" />
+
+
+</menu>
