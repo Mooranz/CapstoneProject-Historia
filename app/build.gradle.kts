@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -17,6 +18,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
     }
 
     buildTypes {
@@ -26,6 +31,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            debug {
+//                buildConfigField("String", "MAPS_API_KEY", "\"AIzaSyAoxVTX7H-9EZN0jeldHvhf9FPIf1PKvxA\"")
+                buildConfigField("String", "BASE_URL", "\"https://historia-backend-nmgayeybjq-et.a.run.app\"")
+            }
         }
     }
     compileOptions {
@@ -37,6 +46,8 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        mlModelBinding = true
+        buildConfig = true
     }
 }
 
@@ -58,8 +69,28 @@ dependencies {
     implementation("androidx.camera:camera-view:${camerax_version}")
     implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
 
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     implementation("androidx.room:room-runtime:2.6.1")
     ksp ("androidx.room:room-compiler:2.6.1")
+
+/*    implementation("org.tensorflow:tensorflow-lite-metadata:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.9.0")*/
+
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+/*    implementation("org.tensorflow:tensorflow-lite-metadata:0.4.4")
+    implementation("com.google.android.gms:play-services-tflite-support:16.1.0")
+    implementation("com.google.android.gms:play-services-tflite-gpu:16.2.0")
+    implementation("org.tensorflow:tensorflow-lite-task-vision-play-services:0.4.2")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.9.0")*/
 }

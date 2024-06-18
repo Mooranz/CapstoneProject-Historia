@@ -1,10 +1,6 @@
 package com.tugas.capstoneproject_historia.data.remote.retrofit
 
-/* FOR LATER USE*/
-
-/*
-import com.dicoding.asclepius.BuildConfig
-import com.tugas.capstoneproject_historia.data.remote.retrofit.ApiService
+import com.tugas.capstoneproject_historia.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -24,4 +20,4 @@ object ApiConfig {
             .build()
         return retrofit.create(ApiService::class.java)
     }
-}*/
+}

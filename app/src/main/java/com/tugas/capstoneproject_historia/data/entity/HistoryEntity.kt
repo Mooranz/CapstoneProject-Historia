@@ -17,10 +17,10 @@ class HistoryEntity(
     var date: String,
 
     @field:ColumnInfo(name = "imageUri")
-    var imageUri: String,
+    var imageUri: String?,
 
-//    @field:ColumnInfo(name = "province")
-//    var province: Float,
+    @field:ColumnInfo(name = "confidenceScore")
+    var confidenceScore: Int,
 //
 //    @field:ColumnInfo(name = "lat")
 //    var lat: Float,

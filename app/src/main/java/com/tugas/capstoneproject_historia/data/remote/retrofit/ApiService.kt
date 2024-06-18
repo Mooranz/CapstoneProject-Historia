@@ -1,19 +1,19 @@
 package com.tugas.capstoneproject_historia.data.remote.retrofit
 
-/* FOR LATER USE */
-
-/*
-import com.dicoding.asclepius.BuildConfig
-import com.dicoding.asclepius.data.remote.response.NewsResponse
+import com.tugas.capstoneproject_historia.data.remote.response.HistoriaResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("everything")
-    fun getNews(
-        @Query("q") query: String = "cancer",
-        @Query("sortBy") sortBy: String = "publishedAt",
-        @Query("apiKey") apiKey: String = BuildConfig.API_KEY
-    ): Call<NewsResponse>
-}*/
+    @Multipart
+    @POST("predict")
+    fun uploadImage(
+        @Part file: MultipartBody.Part,
+    ): Call<HistoriaResponse>
+}

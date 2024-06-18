@@ -34,6 +34,7 @@ class HistoryActivity : AppCompatActivity() {
 
         viewModel.getHistory().observe(this) { history ->
             historyAdapter.submitList(history)
+            history.forEach(::println)
 
             binding.rvHistory.apply {
                 layoutManager = LinearLayoutManager(context)

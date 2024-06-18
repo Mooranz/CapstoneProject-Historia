@@ -5,7 +5,8 @@
     android:id="@+id/mainDetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.detail.DetailActivity">
+    tools:context=".ui.detail.DetailActivity"
+    android:padding="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

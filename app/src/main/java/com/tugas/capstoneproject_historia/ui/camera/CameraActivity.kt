@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.Surface
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -22,24 +23,32 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.dicoding.asclepius.utils.DateFormatter
-import com.tugas.capstoneproject_historia.MainActivity
-import com.tugas.capstoneproject_historia.ui.detail.DetailActivity
 import com.tugas.capstoneproject_historia.createCustomTempFile
-import com.tugas.capstoneproject_historia.ui.history.HistoryViewModel
-import com.tugas.capstoneproject_historia.ui.history.ViewModelFactory
+import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
+import com.tugas.capstoneproject_historia.data.remote.response.Data
 import com.tugas.capstoneproject_historia.data.remote.response.LandmarkInfo
 import com.tugas.capstoneproject_historia.databinding.ActivityCameraBinding
+import com.tugas.capstoneproject_historia.reduceFileImage
 import com.tugas.capstoneproject_historia.ui.achievement.AchievementActivity
+import com.tugas.capstoneproject_historia.ui.detail.DetailActivity
 import com.tugas.capstoneproject_historia.ui.history.HistoryActivity
+import com.tugas.capstoneproject_historia.ui.history.HistoryViewModel
+import com.tugas.capstoneproject_historia.ui.history.ViewModelFactory
+import com.tugas.capstoneproject_historia.uriToFile
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
     private var currentImageUri: Uri? = null
+
+    private val cameraViewModel by viewModels<CameraViewModel>()
+
+//    private lateinit var imageClassifierHelper: ImageClassifierHelper2
+//    private lateinit var imageClassifierHelper: ImageClassifierHelper
+
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -73,6 +82,23 @@ class CameraActivity : AppCompatActivity() {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
 
+        cameraViewModel.isLoading.observe(this){
+            showLoading(it)
+        }
+
+        cameraViewModel.uploadResult.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+
+        cameraViewModel.uploadData.observe(this){
+            if (it != null) {
+                makeHistory(it)
+                intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_DETAIL, it)
+                startActivity(intent)
+            }
+        }
+
         binding.switchCamera.setOnClickListener {
             cameraSelector =
                 if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) CameraSelector.DEFAULT_FRONT_CAMERA
@@ -80,12 +106,17 @@ class CameraActivity : AppCompatActivity() {
             startCamera()
         }
         binding.captureImage.setOnClickListener {
-//            takePhoto()
+            takePhoto()
+            val imageFile = currentImageUri?.let { uriToFile(it, this@CameraActivity).reduceFileImage() }
+            if (imageFile != null) {
+                cameraViewModel.uploadImage(imageFile, this@CameraActivity)
+            }
+/*
             val data = setupData()
             makeHistory(data)
 
             intent = Intent(this, DetailActivity::class.java)
-            startActivity(intent)
+            startActivity(intent)*/
         }
 
         binding.ivHistory.setOnClickListener {
@@ -151,10 +182,12 @@ class CameraActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val intent = Intent()
+                    currentImageUri = output.savedUri
+                /*              val intent = Intent(*//*this@CameraActivity, MainActivity::class.java*//*)
                     intent.putExtra(EXTRA_CAMERAX_IMAGE, output.savedUri.toString())
                     setResult(CAMERAX_RESULT, intent)
-                    finish()
+//                    startActivity(intent)
+                    finish()*/
                 }
 
                 override fun onError(exc: ImageCaptureException) {
@@ -178,10 +211,13 @@ class CameraActivity : AppCompatActivity() {
     ) { uri: Uri? ->
         if (uri != null) {
             currentImageUri = uri
-//            uploadImage()  // Jika AI model on cloud
+            val imageFile = currentImageUri?.let { uriToFile(it, this@CameraActivity).reduceFileImage() }
+            if (imageFile != null) {
+                cameraViewModel.uploadImage(imageFile, this)
+            }  // Jika AI model on cloud
 //            analyzeImage()  // Jika model on device
-            intent = Intent(this, DetailActivity::class.java)
-            startActivity(intent)
+/*            intent = Intent(this, DetailActivity::class.java)
+            startActivity(intent)*/
         } else {
             Log.d("Photo Picker", "No media selected")
         }
@@ -226,13 +262,18 @@ class CameraActivity : AppCompatActivity() {
         return landmark
     }
 
-    private fun makeHistory(landmarkInfo: LandmarkInfo) {
+    private fun makeHistory(inputData: Data) {
         val data = HistoryEntity(
-            title = landmarkInfo.title,
+            title = inputData.result,
             date = DateFormatter.formatLongToDate(System.currentTimeMillis()),
-            imageUri = landmarkInfo.img
+            imageUri = null,
+            confidenceScore = inputData.confidenceScore
         )
         viewModel.insertHistory(data)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onStart() {
@@ -244,6 +285,35 @@ class CameraActivity : AppCompatActivity() {
         super.onStop()
         orientationEventListener.disable()
     }
+
+/*    private fun analyzeImage() {
+        imageClassifierHelper = ImageClassifierHelper2(
+            context = this,
+            classifierListener = object : ImageClassifierHelper2.ClassifierListener {
+                override fun onError(error: String) {
+                    Toast.makeText(this@CameraActivity, error, Toast.LENGTH_SHORT).show()
+                }
+                override fun onResult(results: List<Classifications>?) {
+                    results?.let { it ->
+                        if (it.isNotEmpty() && it[0].categories.isNotEmpty()) {
+                            println(it)
+                            val sortedCategories =
+                                it[0].categories.sortedBy { it?.label }
+
+                            val displayResult =
+                                "${sortedCategories.first().label} " + NumberFormat.getPercentInstance()
+                                    .format(sortedCategories.first().score) + " | ${sortedCategories[1].label } " + NumberFormat.getPercentInstance()
+                                    .format(sortedCategories[1].score)
+
+                            binding.title.text = displayResult
+                        }
+                    }
+                }
+            }
+        )
+
+        imageClassifierHelper.classifyStaticImage(currentImageUri!!)
+    }*/
 
     companion object {
         private const val TAG = "CameraActivity"

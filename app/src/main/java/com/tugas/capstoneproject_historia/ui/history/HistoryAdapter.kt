@@ -59,6 +59,7 @@ class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(D
             binding.textViewLabel.text = historyItem.title
             binding.tvDateHeader.text = DateFormatter.formatDateToDate(historyItem.date)
             binding.textViewTime.text = DateFormatter.formatDateToHours(historyItem.date)
+            binding.tvConfidenceScore.text = "${historyItem.confidenceScore}%"
             Glide.with(itemView.context)
                 .load(historyItem.imageUri)
                 .into(binding.profileImage)

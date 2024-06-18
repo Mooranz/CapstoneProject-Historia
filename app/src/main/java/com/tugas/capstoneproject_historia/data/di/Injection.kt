@@ -2,7 +2,7 @@ package com.tugas.capstoneproject_historia.data.di
 
 import android.content.Context
 import com.tugas.capstoneproject_historia.data.HistoryRepository
-import com.dicoding.asclepius.data.room.HistoryDatabase
+import com.tugas.capstoneproject_historia.data.room.HistoryDatabase
 import com.dicoding.asclepius.utils.AppExecutors
 
 object Injection {
