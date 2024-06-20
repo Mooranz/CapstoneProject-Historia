@@ -3,7 +3,7 @@ package com.tugas.capstoneproject_historia.data
 import androidx.lifecycle.LiveData
 import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.tugas.capstoneproject_historia.data.room.HistoryDao
-import com.dicoding.asclepius.utils.AppExecutors
+import com.tugas.capstoneproject_historia.utils.AppExecutors
 
 class HistoryRepository private constructor(
     private val historyDao: HistoryDao,

@@ -1,6 +1,5 @@
-package com.tugas.capstoneproject_historia.ui.achievement
+package com.tugas.capstoneproject_historia.ui.maps
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +14,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
-import com.tugas.capstoneproject_historia.MainActivity
 import com.tugas.capstoneproject_historia.R
 import com.tugas.capstoneproject_historia.databinding.ActivityMapsBinding
 

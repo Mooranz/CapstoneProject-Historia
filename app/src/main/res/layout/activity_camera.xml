@@ -27,15 +27,17 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="64dp"
+        android:contentDescription="@string/capture_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/capture_button" />
 
     <ImageView
-        android:id="@+id/photo_picker_button"
+        android:id="@+id/iv_photo_picker"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:contentDescription="@string/pick_photo"
         app:layout_constraintBottom_toBottomOf="@+id/captureImage"
         app:layout_constraintEnd_toStartOf="@+id/captureImage"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +48,7 @@
         android:id="@+id/iv_maps_button"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:contentDescription="@string/go_to_maps"
         app:layout_constraintBottom_toBottomOf="@+id/captureImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/captureImage"
@@ -58,6 +61,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/menu"
         app:layout_constraintEnd_toEndOf="@+id/viewFinder"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_more_vert_24"
@@ -76,10 +80,9 @@
         app:tint="@color/white"/>
 
     <TextView
-        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Historia"
+        android:text="@string/app_final_name"
         android:textSize="20sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/iv_history"

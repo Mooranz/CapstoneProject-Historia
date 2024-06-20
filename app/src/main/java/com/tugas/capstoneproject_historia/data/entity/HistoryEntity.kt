@@ -27,10 +27,4 @@ class HistoryEntity(
 
     @field:ColumnInfo(name = "explanation")
     var explanation: String,
-//
-//    @field:ColumnInfo(name = "lon")
-//    var lon: Float,
-//
-//    @field:ColumnInfo(name = "isScanned")
-//    var isScanned: Boolean? = false,
 ) : Parcelable

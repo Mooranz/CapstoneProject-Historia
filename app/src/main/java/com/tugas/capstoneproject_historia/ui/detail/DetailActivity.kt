@@ -1,10 +1,7 @@
 package com.tugas.capstoneproject_historia.ui.detail
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,15 +11,12 @@ import com.bumptech.glide.request.RequestOptions
 import com.tugas.capstoneproject_historia.MainActivity
 import com.tugas.capstoneproject_historia.R
 import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
-import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
-import com.tugas.capstoneproject_historia.data.remote.response.Data
 import com.tugas.capstoneproject_historia.databinding.ActivityDetailBinding
-import com.tugas.capstoneproject_historia.ui.camera.CameraActivity
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
-    private var clicked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -33,29 +27,12 @@ class DetailActivity : AppCompatActivity() {
         actionBar?.title = getString(R.string.app_final_name) + " - Detail"
 
         setupData()
-/*        setupData(this)
-        binding.tvLink.text = getString(R.string.tugu_link)
-
-        if (!clicked) {
-            binding.tvLink.setTextColor(getColor(com.bumptech.glide.R.color.material_deep_teal_200))
-        } else binding.tvLink.setTextColor(getColor(com.bumptech.glide.R.color.abc_tint_default))
-
-        binding.tvLink.setOnClickListener {
-            intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(binding.tvLink.text.toString())
-            startActivity(intent)
-
-            clicked = true
-            binding.tvLink.setTextColor(getColor(com.bumptech.glide.R.color.abc_tint_default))
-        }
- */
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
                 val intent = Intent(this, MainActivity::class.java)
-//        MainActivity.currentImageUri = null
                 startActivity(intent)
                 finish()
                 return true
@@ -74,34 +51,15 @@ class DetailActivity : AppCompatActivity() {
                     .into(binding.imgDetail)
             }
             binding.tvTitle.text = detail.title
-            binding.tvDetails.text = detail.explanation
+            binding.tvDetail.text = detail.explanation
             binding.tvLocation.visibility = View.GONE
-            binding.tvLink.visibility = View.GONE
             binding.tvYearMade.visibility = View.GONE
         }
     }
 
-/*    private fun setupData(context: Context) {
-        val repo = RemoteDataSource(this)
-        val landmarkInfo = repo.getLandmarkInfo().apply {
-            binding.apply {
-                tvTitle.text = title
-                tvYearMade.text = "Dibangun Tahun: $year"
-                tvLocation.text = locaction
-                tvDetails.text = Html.fromHtml(desc, Html.FROM_HTML_MODE_COMPACT)
-
-                if ()
-                Glide.with(context)
-                    .load(img)
-                    .into(imgDetail)
-            }
-        }
-    }*/
-
     override fun onBackPressed() {
         super.onBackPressed()
         val intent = Intent(this, MainActivity::class.java)
-//        MainActivity.currentImageUri = null
         startActivity(intent)
     }
 

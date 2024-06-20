@@ -3,7 +3,7 @@ package com.tugas.capstoneproject_historia.data.di
 import android.content.Context
 import com.tugas.capstoneproject_historia.data.HistoryRepository
 import com.tugas.capstoneproject_historia.data.room.HistoryDatabase
-import com.dicoding.asclepius.utils.AppExecutors
+import com.tugas.capstoneproject_historia.utils.AppExecutors
 
 object Injection {
     fun provideRepository(context: Context): HistoryRepository {

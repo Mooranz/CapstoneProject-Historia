@@ -1,25 +1,21 @@
 package com.tugas.capstoneproject_historia.ui.camera
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.tugas.capstoneproject_historia.data.remote.response.Data
 import com.tugas.capstoneproject_historia.data.remote.response.HistoriaResponse
 import com.tugas.capstoneproject_historia.data.remote.retrofit.ApiConfig
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Response
 import java.io.File
 
-class CameraViewModel() : ViewModel() {
+class CameraViewModel : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -54,7 +50,6 @@ class CameraViewModel() : ViewModel() {
                         if (responseBody.data != null) {
                             _uploadData.value = responseBody.data
                         }
-                        Log.d("TestApi", responseBody.message.toString())
                     }
                 } else {
                     Toast.makeText(context, response.body()?.message ?: "Terjadi kesalahan. Ulangi Lagi.", Toast.LENGTH_SHORT).show()
@@ -62,7 +57,6 @@ class CameraViewModel() : ViewModel() {
             }
 
             override fun onFailure(call: Call<HistoriaResponse>, t: Throwable) {
-                Log.d("TestApi", t.message.toString())
                 Toast.makeText(context, t.message ?: "Terjadi kesalahan. Ulangi lagi.", Toast.LENGTH_SHORT).show()
                 _isLoading.value = false
             }

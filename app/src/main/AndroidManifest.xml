@@ -39,12 +39,9 @@
             android:value="AIzaSyAoxVTX7H-9EZN0jeldHvhf9FPIf1PKvxA" />
 
         <activity
-            android:name=".ui.achievement.MapsActivity"
+            android:name=".ui.maps.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
-<!--        <activity
-            android:name=".ui.achievement.AchievementActivity"
-            android:exported="false" />-->
         <activity
             android:name=".ui.history.HistoryActivity"
             android:exported="false" />

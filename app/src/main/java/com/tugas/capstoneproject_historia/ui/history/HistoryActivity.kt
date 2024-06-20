@@ -47,7 +47,6 @@ class HistoryActivity : AppCompatActivity() {
             historyAdapter.setOnItemClickCallback(object : HistoryAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: HistoryEntity) {
                     val intent = Intent(this@HistoryActivity, DetailActivity::class.java)
-//                    intent.putExtra(ResultActivity.EXTRA_IMAGE_URI, data.imageUri)
                     intent.putExtra(DetailActivity.EXTRA_DETAIL, data)
                     startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this@HistoryActivity).toBundle())
                 }

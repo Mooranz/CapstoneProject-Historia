@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.utils
+package com.tugas.capstoneproject_historia.utils
 
 import android.util.Log
 import java.text.DateFormat

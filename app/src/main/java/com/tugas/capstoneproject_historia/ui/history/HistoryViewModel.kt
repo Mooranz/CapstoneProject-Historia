@@ -8,9 +8,4 @@ class HistoryViewModel(private val historyRepository: HistoryRepository) : ViewM
     fun getHistory() = historyRepository.getHistory()
 
     fun insertHistory(historyEntity: HistoryEntity) = historyRepository.insertHistoryIntoDatabase(historyEntity)
-
-    companion object {
-        private const val TAG = "ResultViewModel"
-    }
-
 }
