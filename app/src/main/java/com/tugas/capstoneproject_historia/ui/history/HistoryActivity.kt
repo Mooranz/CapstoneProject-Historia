@@ -2,12 +2,16 @@ package com.tugas.capstoneproject_historia.ui.history
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
@@ -28,6 +32,24 @@ class HistoryActivity : AppCompatActivity() {
         val viewModel: HistoryViewModel by viewModels { factory }
 
         val historyAdapter = HistoryAdapter()
+
+        val nightModeFlags: Int =
+            this.getResources().getConfiguration().uiMode and
+                    Configuration.UI_MODE_NIGHT_MASK
+        when (nightModeFlags) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                val unwrappedDrawable =
+                    AppCompatResources.getDrawable(this, R.drawable.baseline_arrow_forward_ios_24)
+                val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
+                DrawableCompat.setTint(wrappedDrawable, Color.GRAY)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                val unwrappedDrawable =
+                    AppCompatResources.getDrawable(this, R.drawable.baseline_arrow_forward_ios_24)
+                val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
+                DrawableCompat.setTint(wrappedDrawable, Color.BLACK)
+            }
+        }
 
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
