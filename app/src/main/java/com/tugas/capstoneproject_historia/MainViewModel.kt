@@ -55,7 +55,7 @@ class MainViewModel : ViewModel() {
                         }
                     }
                 } else {
-                    Toast.makeText(context, response.body()?.message ?: "Terjadi kesalahan. Ulangi Lagi.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, response.errorBody()?.string() ?: "Terjadi kesalahan. Ulangi Lagi.", Toast.LENGTH_SHORT).show()
                     currentImageUri = null
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
