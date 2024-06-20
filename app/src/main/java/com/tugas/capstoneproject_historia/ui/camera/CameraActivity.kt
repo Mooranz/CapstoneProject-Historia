@@ -12,6 +12,7 @@ import android.view.Surface
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,19 +25,22 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.dicoding.asclepius.utils.DateFormatter
-import com.tugas.capstoneproject_historia.createCustomTempFile
+import com.tugas.capstoneproject_historia.MainActivity
+import com.tugas.capstoneproject_historia.R
+import com.tugas.capstoneproject_historia.utils.createCustomTempFile
 import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
 import com.tugas.capstoneproject_historia.data.remote.response.Data
 import com.tugas.capstoneproject_historia.data.remote.response.LandmarkInfo
 import com.tugas.capstoneproject_historia.databinding.ActivityCameraBinding
-import com.tugas.capstoneproject_historia.reduceFileImage
-import com.tugas.capstoneproject_historia.ui.achievement.AchievementActivity
+import com.tugas.capstoneproject_historia.utils.reduceFileImage
+import com.tugas.capstoneproject_historia.ui.achievement.MapsActivity
 import com.tugas.capstoneproject_historia.ui.detail.DetailActivity
 import com.tugas.capstoneproject_historia.ui.history.HistoryActivity
 import com.tugas.capstoneproject_historia.ui.history.HistoryViewModel
 import com.tugas.capstoneproject_historia.ui.history.ViewModelFactory
-import com.tugas.capstoneproject_historia.uriToFile
+import com.tugas.capstoneproject_historia.utils.uriToFile
+
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
@@ -58,7 +62,6 @@ class CameraActivity : AppCompatActivity() {
                 Toast.makeText(this, "Permission request granted", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "Permission request denied", Toast.LENGTH_LONG).show()
-                Toast.makeText(this, "please reopen the app for permission request :)", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -92,25 +95,32 @@ class CameraActivity : AppCompatActivity() {
 
         cameraViewModel.uploadData.observe(this){
             if (it != null) {
-                makeHistory(it)
+                val data = HistoryEntity(
+                    title = it.result,
+                    date = DateFormatter.formatLongToDate(System.currentTimeMillis()),
+                    imageUri = it.imageUrl,
+                    confidenceScore = it.confidenceScore,
+                    explanation = it.explanation
+                )
+                viewModel.insertHistory(data)
                 intent = Intent(this, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_DETAIL, it)
+                intent.putExtra(DetailActivity.EXTRA_DETAIL, data)
                 startActivity(intent)
             }
         }
 
-        binding.switchCamera.setOnClickListener {
+/*        binding.switchCamera.setOnClickListener {
             cameraSelector =
                 if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) CameraSelector.DEFAULT_FRONT_CAMERA
                 else CameraSelector.DEFAULT_BACK_CAMERA
             startCamera()
-        }
+        }*/
         binding.captureImage.setOnClickListener {
             takePhoto()
-            val imageFile = currentImageUri?.let { uriToFile(it, this@CameraActivity).reduceFileImage() }
+            /*val imageFile = currentImageUri?.let { uriToFile(it, this@CameraActivity).reduceFileImage() }
             if (imageFile != null) {
                 cameraViewModel.uploadImage(imageFile, this@CameraActivity)
-            }
+            }*/
 /*
             val data = setupData()
             makeHistory(data)
@@ -123,12 +133,36 @@ class CameraActivity : AppCompatActivity() {
             intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
         }
-        binding.ivAchievementButton.setOnClickListener {
-            intent = Intent(this, AchievementActivity::class.java)
-            startActivity(intent)
+        binding.ivMapsButton.setOnClickListener {
+            startActivity(Intent(this, MapsActivity::class.java))
         }
 
         binding.photoPickerButton.setOnClickListener { startGallery() }
+
+        binding.ivMenuButton.setOnClickListener {
+            // Initializing the popup menu and giving the reference as current context
+            val popupMenu = PopupMenu(this, binding.ivMenuButton)
+
+            // Inflating popup menu from popup_menu.xml file
+            popupMenu.menuInflater.inflate(R.menu.menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_permission -> {
+                        requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+                    }
+
+                    R.id.menu_switch_camera -> {
+                        cameraSelector =
+                            if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) CameraSelector.DEFAULT_FRONT_CAMERA
+                            else CameraSelector.DEFAULT_BACK_CAMERA
+                        startCamera()
+                    }
+                }
+                true
+            }
+            // Showing the popup menu
+            popupMenu.show()
+        }
     }
 
     public override fun onResume() {
@@ -182,12 +216,10 @@ class CameraActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    currentImageUri = output.savedUri
-                /*              val intent = Intent(*//*this@CameraActivity, MainActivity::class.java*//*)
+                    val intent = Intent(this@CameraActivity, MainActivity::class.java)
                     intent.putExtra(EXTRA_CAMERAX_IMAGE, output.savedUri.toString())
                     setResult(CAMERAX_RESULT, intent)
-//                    startActivity(intent)
-                    finish()*/
+                    finish()
                 }
 
                 override fun onError(exc: ImageCaptureException) {
@@ -267,7 +299,8 @@ class CameraActivity : AppCompatActivity() {
             title = inputData.result,
             date = DateFormatter.formatLongToDate(System.currentTimeMillis()),
             imageUri = null,
-            confidenceScore = inputData.confidenceScore
+            confidenceScore = inputData.confidenceScore,
+            explanation = inputData.explanation
         )
         viewModel.insertHistory(data)
     }
@@ -284,6 +317,14 @@ class CameraActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         orientationEventListener.disable()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val a = Intent(Intent.ACTION_MAIN)
+        a.addCategory(Intent.CATEGORY_HOME)
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(a)
     }
 
 /*    private fun analyzeImage() {

@@ -1,4 +1,4 @@
-package com.tugas.capstoneproject_historia
+package com.tugas.capstoneproject_historia.utils
 
 import android.content.ContentValues
 import android.content.Context
@@ -11,6 +11,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
+import com.tugas.capstoneproject_historia.BuildConfig
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -81,7 +82,7 @@ fun File.reduceFileImage(): File {
         bitmap?.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
         val bmpPicByteArray = bmpStream.toByteArray()
         streamLength = bmpPicByteArray.size
-        compressQuality -= 5
+        compressQuality -= 10
     } while (streamLength > MAXIMAL_SIZE)
     bitmap?.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
     return file

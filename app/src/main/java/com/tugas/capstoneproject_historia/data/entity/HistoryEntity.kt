@@ -1,9 +1,12 @@
 package com.tugas.capstoneproject_historia.data.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "history")
 class HistoryEntity(
     @field:ColumnInfo(name = "id")
@@ -21,13 +24,13 @@ class HistoryEntity(
 
     @field:ColumnInfo(name = "confidenceScore")
     var confidenceScore: Int,
-//
-//    @field:ColumnInfo(name = "lat")
-//    var lat: Float,
+
+    @field:ColumnInfo(name = "explanation")
+    var explanation: String,
 //
 //    @field:ColumnInfo(name = "lon")
 //    var lon: Float,
 //
 //    @field:ColumnInfo(name = "isScanned")
 //    var isScanned: Boolean? = false,
-)
+) : Parcelable

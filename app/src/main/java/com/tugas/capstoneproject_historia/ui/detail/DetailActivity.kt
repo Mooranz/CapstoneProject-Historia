@@ -11,11 +11,13 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.tugas.capstoneproject_historia.MainActivity
 import com.tugas.capstoneproject_historia.R
 import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.tugas.capstoneproject_historia.data.remote.RemoteDataSource
 import com.tugas.capstoneproject_historia.data.remote.response.Data
 import com.tugas.capstoneproject_historia.databinding.ActivityDetailBinding
+import com.tugas.capstoneproject_historia.ui.camera.CameraActivity
 
 class DetailActivity : AppCompatActivity() {
 
@@ -28,6 +30,7 @@ class DetailActivity : AppCompatActivity() {
 
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.title = getString(R.string.app_final_name) + " - Detail"
 
         setupData()
 /*        setupData(this)
@@ -51,6 +54,9 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
+                val intent = Intent(this, MainActivity::class.java)
+//        MainActivity.currentImageUri = null
+                startActivity(intent)
                 finish()
                 return true
             }
@@ -59,15 +65,15 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupData() {
-        val detail = intent.getParcelableExtra<Data>(EXTRA_DETAIL)
+        val detail = intent.getParcelableExtra<HistoryEntity>(EXTRA_DETAIL) as HistoryEntity
         if (detail != null) {
-            /*if (!detail.imageUrl.isNullOrEmpty()) {
+            if (!detail.imageUri.isNullOrEmpty()) {
                 Glide.with(applicationContext)
-                    .load(detail.imageUrl)
+                    .load(detail.imageUri)
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
                     .into(binding.imgDetail)
-            }*/
-            binding.tvTitle.text = detail.result
+            }
+            binding.tvTitle.text = detail.title
             binding.tvDetails.text = detail.explanation
             binding.tvLocation.visibility = View.GONE
             binding.tvLink.visibility = View.GONE
@@ -91,6 +97,13 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }*/
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+//        MainActivity.currentImageUri = null
+        startActivity(intent)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return true

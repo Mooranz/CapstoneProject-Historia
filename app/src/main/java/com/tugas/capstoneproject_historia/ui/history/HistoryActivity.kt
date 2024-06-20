@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
@@ -30,7 +31,7 @@ class HistoryActivity : AppCompatActivity() {
 
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.title = getString(R.string.app_name) + " - History"
+        actionBar?.title = getString(R.string.app_final_name) + " - History"
 
         viewModel.getHistory().observe(this) { history ->
             historyAdapter.submitList(history)
@@ -47,8 +48,8 @@ class HistoryActivity : AppCompatActivity() {
                 override fun onItemClicked(data: HistoryEntity) {
                     val intent = Intent(this@HistoryActivity, DetailActivity::class.java)
 //                    intent.putExtra(ResultActivity.EXTRA_IMAGE_URI, data.imageUri)
-//                    intent.putExtra(ResultActivity.EXTRA_RESULT, data.result)
-                    startActivity(intent)
+                    intent.putExtra(DetailActivity.EXTRA_DETAIL, data)
+                    startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this@HistoryActivity).toBundle())
                 }
             })
         }

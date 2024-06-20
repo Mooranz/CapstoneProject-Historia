@@ -5,17 +5,18 @@
     android:id="@+id/mainDetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.detail.DetailActivity"
-    android:padding="8dp">
+    tools:context=".ui.detail.DetailActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
 
         <ImageView
             android:id="@+id/img_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintHeight_min="200dp"
             android:layout_margin="8dp"
             app:layout_constraintHeight_max="400dp"
             android:contentDescription="Gambar landmark"
@@ -28,7 +29,9 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:text="Nama Landmark"
             android:textSize="32sp"
             android:textStyle="bold"
@@ -47,7 +50,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_location"
@@ -60,20 +64,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_year_made" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_year_made"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
             android:text="Detail"
-            android:justificationMode="inter_word"
             android:textSize="16sp"
-            android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_location" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
         <TextView
             android:id="@+id/tv_link"

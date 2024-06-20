@@ -32,11 +32,15 @@ class HistoryAdapter : ListAdapter<HistoryEntity, HistoryAdapter.MyViewHolder>(D
                 Log.d("DateHeaderAdapter", "hehehe")
             } else {
                 holder.bind(history)
+                holder.binding.tvDateHeader.visibility = View.VISIBLE
+                holder.binding.divider.visibility = View.VISIBLE
                 Log.d("DateHeaderAdapter", "anjirlah")
 
             }
         } catch (e: IndexOutOfBoundsException) {
             holder.bind(history)
+            holder.binding.tvDateHeader.visibility = View.VISIBLE
+            holder.binding.divider.visibility = View.VISIBLE
             Log.d("DateHeaderAdapter", e.message!!)
         }
 

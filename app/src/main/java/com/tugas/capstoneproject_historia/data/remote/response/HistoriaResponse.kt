@@ -36,7 +36,7 @@ data class Data(
 
 	@field:SerializedName("explanation")
 	val explanation: String,
-/*
-	@field:SerializedName("imageUrl")
-	val imageUrl: String?*/
+
+	@field:SerializedName("url")
+	val imageUrl: String?
 ) : Parcelable

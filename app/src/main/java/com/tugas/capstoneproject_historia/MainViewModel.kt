@@ -1,12 +1,14 @@
-package com.tugas.capstoneproject_historia.ui.camera
+package com.tugas.capstoneproject_historia
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.tugas.capstoneproject_historia.MainActivity.Companion.currentImageUri
 import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
 import com.tugas.capstoneproject_historia.data.remote.response.Data
 import com.tugas.capstoneproject_historia.data.remote.response.HistoriaResponse
@@ -19,7 +21,7 @@ import retrofit2.Call
 import retrofit2.Response
 import java.io.File
 
-class CameraViewModel() : ViewModel() {
+class MainViewModel() : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -53,11 +55,16 @@ class CameraViewModel() : ViewModel() {
                         _uploadResult.value = responseBody.message
                         if (responseBody.data != null) {
                             _uploadData.value = responseBody.data
+                            currentImageUri = null
                         }
                         Log.d("TestApi", responseBody.message.toString())
                     }
                 } else {
+                    Log.d("TestApi", response.raw().message)
                     Toast.makeText(context, response.body()?.message ?: "Terjadi kesalahan. Ulangi Lagi.", Toast.LENGTH_SHORT).show()
+                    currentImageUri = null
+                    val intent = Intent(context, MainActivity::class.java)
+                    context.startActivity(intent)
                 }
             }
 
@@ -65,6 +72,9 @@ class CameraViewModel() : ViewModel() {
                 Log.d("TestApi", t.message.toString())
                 Toast.makeText(context, t.message ?: "Terjadi kesalahan. Ulangi lagi.", Toast.LENGTH_SHORT).show()
                 _isLoading.value = false
+                val intent = Intent(context, MainActivity::class.java)
+                currentImageUri = null
+                context.startActivity(intent)
             }
         })
     }

@@ -1,3 +1,4 @@
+/*
 package com.tugas.capstoneproject_historia.ui.achievement
 
 import android.content.Intent
@@ -52,9 +53,11 @@ class AchievementActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
-            R.id.menu_maps ->{
+*/
+/*            R.id.menu_maps ->{
                 startActivity(Intent(this, MapsActivity::class.java))
-            }
+            }*//*
+
 
             android.R.id.home -> {
                 finish()
@@ -63,4 +66,4 @@ class AchievementActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-}
+}*/
