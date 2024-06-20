@@ -41,7 +41,7 @@ class HistoryActivity : AppCompatActivity() {
                 val unwrappedDrawable =
                     AppCompatResources.getDrawable(this, R.drawable.baseline_arrow_forward_ios_24)
                 val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-                DrawableCompat.setTint(wrappedDrawable, Color.WHITE)
+                DrawableCompat.setTint(wrappedDrawable, Color.GRAY)
             }
             Configuration.UI_MODE_NIGHT_NO -> {
                 val unwrappedDrawable =
