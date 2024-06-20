@@ -1,65 +1,73 @@
 package com.tugas.capstoneproject_historia
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
-import android.Manifest
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.tugas.capstoneproject_historia.CameraActivity.Companion.CAMERAX_RESULT
+import com.tugas.capstoneproject_historia.utils.DateFormatter
+import com.tugas.capstoneproject_historia.data.entity.HistoryEntity
+import com.tugas.capstoneproject_historia.data.remote.response.Data
 import com.tugas.capstoneproject_historia.databinding.ActivityMainBinding
+import com.tugas.capstoneproject_historia.ui.camera.CameraActivity
+import com.tugas.capstoneproject_historia.ui.camera.CameraActivity.Companion.CAMERAX_RESULT
+import com.tugas.capstoneproject_historia.ui.detail.DetailActivity
+import com.tugas.capstoneproject_historia.ui.history.HistoryViewModel
+import com.tugas.capstoneproject_historia.ui.history.ViewModelFactory
+import com.tugas.capstoneproject_historia.utils.reduceFileImage
+import com.tugas.capstoneproject_historia.utils.uriToFile
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var currentImageUri: Uri? = null
+    var currentImageUri: Uri? = null
 
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                Toast.makeText(this, "Permission request granted", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, "Permission request denied", Toast.LENGTH_LONG).show()
-            }
-        }
+    private val historyViewModel: HistoryViewModel by viewModels {
+        ViewModelFactory.getInstance(application)
+    }
 
-    private fun allPermissionsGranted() =
-        ContextCompat.checkSelfPermission(
-            this,
-            REQUIRED_PERMISSION
-        ) == PackageManager.PERMISSION_GRANTED
+    private val mainViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        /*
         enableEdgeToEdge()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val actionBar = supportActionBar
+        actionBar?.title = "Uploading..."
+
+        mainViewModel.isLoading.observe(this){
+            showLoading(it)
         }
 
-         */
-
-        if (!allPermissionsGranted()) {
-            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+        mainViewModel.uploadResult.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
-        binding.cameraXButton.setOnClickListener { startCameraX() }
-        binding.uploadButton.setOnClickListener { uploadImage() }
+        mainViewModel.uploadData.observe(this){
+            if (it != null) {
+                uploadData(it)
+            }
+        }
+
+        if (currentImageUri == null) {
+            startCameraX()
+        }
+
+        binding.previewImageView.setOnClickListener {
+            if (currentImageUri != null) {
+                val imageFile = uriToFile(currentImageUri!!, this).reduceFileImage()
+                mainViewModel.uploadImage(imageFile, this)
+                currentImageUri = null
+            }
+        }
     }
 
     private fun startCameraX() {
@@ -72,6 +80,16 @@ class MainActivity : AppCompatActivity() {
     ) {
         if (it.resultCode == CAMERAX_RESULT) {
             currentImageUri = it.data?.getStringExtra(CameraActivity.EXTRA_CAMERAX_IMAGE)?.toUri()
+            if (currentImageUri != null) {
+                showImage()
+                val imageFile = currentImageUri?.let { uriToFile(it, this).reduceFileImage() }
+                if (imageFile != null) {
+                    mainViewModel.uploadImage(imageFile, this)
+                    currentImageUri = null
+                }
+            } else {
+                startCameraX()
+            }
             showImage()
         }
     }
@@ -83,11 +101,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImage() {
-        Toast.makeText(this, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
+    fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    fun uploadData(inputData : Data) {
+        if (inputData != null) {
+            val data = HistoryEntity(
+                title = inputData.result,
+                date = DateFormatter.formatLongToDate(System.currentTimeMillis()),
+                imageUri = inputData.imageUrl,
+                confidenceScore = inputData.confidenceScore,
+                explanation = inputData.explanation
+            )
+            historyViewModel.insertHistory(data)
+            intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.EXTRA_DETAIL, data)
+            startActivity(intent)
+        }
     }
 
     companion object {
-        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+        var currentImageUri: Uri? = null
     }
 }

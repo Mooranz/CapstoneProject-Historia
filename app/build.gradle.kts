@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -24,6 +27,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            debug {
+//                buildConfigField("String", "MAPS_API_KEY", "\"AIzaSyAoxVTX7H-9EZN0jeldHvhf9FPIf1PKvxA\"")
+                buildConfigField("String", "BASE_URL", "\"https://historia-backend-nmgayeybjq-et.a.run.app\"")
+            }
         }
     }
     compileOptions {
@@ -35,6 +42,8 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        mlModelBinding = true
+        buildConfig = true
     }
 }
 
@@ -45,6 +54,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -55,5 +65,17 @@ dependencies {
     implementation("androidx.camera:camera-view:${camerax_version}")
     implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
 
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation("androidx.room:room-runtime:2.6.1")
+    ksp ("androidx.room:room-compiler:2.6.1")
+
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 }

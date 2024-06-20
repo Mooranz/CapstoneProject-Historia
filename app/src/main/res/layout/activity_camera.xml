@@ -5,7 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CameraActivity">
+    tools:context=".ui.camera.CameraActivity">
+
+    <ImageView
+        android:id="@+id/previewImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
@@ -14,22 +24,90 @@
 
     <ImageView
         android:id="@+id/captureImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="64dp"
+        android:contentDescription="@string/capture_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_capture" />
+        app:srcCompat="@drawable/capture_button" />
 
     <ImageView
-        android:id="@+id/switchCamera"
+        android:id="@+id/iv_photo_picker"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:contentDescription="@string/pick_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/captureImage"
+        app:layout_constraintEnd_toStartOf="@+id/captureImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/captureImage"
+        app:srcCompat="@drawable/photo_picker_icon" />
+
+    <ImageView
+        android:id="@+id/iv_maps_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:contentDescription="@string/go_to_maps"
+        app:layout_constraintBottom_toBottomOf="@+id/captureImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/captureImage"
+        app:layout_constraintTop_toTopOf="@+id/captureImage"
+        app:srcCompat="@drawable/maps_button" />
+
+    <ImageView
+        android:id="@+id/iv_menu_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/menu"
         app:layout_constraintEnd_toEndOf="@+id/viewFinder"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_switch_camera" />
+        app:srcCompat="@drawable/baseline_more_vert_24"
+        app:tint="@color/white"/>
+
+    <ImageView
+        android:id="@+id/iv_history"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/history_desc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/history_from_figma_icon"
+        app:tint="@color/white"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_final_name"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_history"
+        app:layout_constraintEnd_toStartOf="@+id/iv_menu_button"
+        app:layout_constraintStart_toEndOf="@+id/iv_history"
+        app:layout_constraintTop_toTopOf="@+id/iv_history" />
+
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder"
+        app:layout_constraintVertical_bias="0.40"
+        app:srcCompat="@drawable/frame" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    <item
+        android:id="@+id/menu_maps"
+        android:contentDescription="@string/to_maps"
+        android:icon="@drawable/maps_with_pins"
+        app:showAsAction="always"
+        android:title="@string/maps" />-->
+
+    <item
+        android:id="@+id/menu_permission"
+        android:contentDescription="@string/request_permission"
+        app:showAsAction="never"
+        android:title="@string/request_permission" />
+
+    <item
+        android:id="@+id/menu_switch_camera"
+        android:contentDescription="@string/switch_camera"
+        app:showAsAction="never"
+        android:title="@string/switch_camera" />
+</menu>
